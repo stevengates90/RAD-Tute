@@ -1,29 +1,24 @@
-### CHEATSHEET
+# README
 
-1. `docker-compose run web rails new . --force --no-deps --database=postgresql`
-2. `docker-compose build`
-3. `config/database.yml`
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-```yml
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  host: db
-  username: alex
-  password:
-  pool: 5
+Things you may want to cover:
 
-development:
-  <<: *default
-  database: myapp_development
+* Ruby version
 
+* System dependencies
 
-test:
-  <<: *default
-  database: myapp_test
-```
+* Configuration
 
-4. `docker-compose up`
-5. `docker-compose run web rake db:create`
-6. hit `http://localhost:3000`
-7. `docker-compose down`
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
