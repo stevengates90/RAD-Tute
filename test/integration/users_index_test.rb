@@ -4,7 +4,6 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
   
   def setup
     @user = users(:michael)
-    @non_admin = users(:archer)
   end
 
   test "index including pagination" do
