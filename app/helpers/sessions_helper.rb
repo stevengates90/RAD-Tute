@@ -1,6 +1,6 @@
 module SessionsHelper
     def log_in(user)
-        session[:user_id] = user.id
+        session[:userid] = user.id
     end
 
     def remember(user)
@@ -9,21 +9,20 @@ module SessionsHelper
         cookies.permanent[:remember_token] = user.remember_token
     end
 
+    def current_user?(user)
+        user == current_user
+    end
+
     def current_user
-        if (user_id = session[:user_id])
-            @current_user ||= User.find_by(id: user_id)
+        if session[:userid]
+            @current_user ||= User.find_by(id: session[:user_id])
         elsif (user_id = cookies.signed[:user_id])
-            #raise
             user = User.find_by(id: user_id)
-            if user && user.authenticated?(:remember, cookies[:remember_token])
+            if user && user.authenticated?(cookies[:remember_token])
                 log_in user
                 @current_user = user
             end
         end
-    end
-
-    def current_user?(user)
-        user && user == current_user
     end
 
     def logged_in?
@@ -33,7 +32,7 @@ module SessionsHelper
     def forget(user)
         user.forget
         cookies.delete(:user_id)
-        cookies.delete(:remember_token)
+        cookies.delete(:remember_token)    
     end
 
     def log_out
@@ -43,11 +42,11 @@ module SessionsHelper
     end
 
     def redirect_back_or(default)
-        redirect_to(session[:forwading_url] || default)
-        session.delete(:forwading_url)
+        redirect_to(session[:forwarding_url] || default)
+        session.delete(:forwarding_url)
     end
-    
+
     def store_location
-        session[:forwading_url] = request.original_url if request.get?
+        session[:forwarding_url] = request.original_url if request.get?
     end
 end
